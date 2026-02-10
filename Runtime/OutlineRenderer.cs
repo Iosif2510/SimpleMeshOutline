@@ -20,7 +20,7 @@ namespace _2510.SimpleMeshOutline
         [SerializeField] private OutlineElement outlineElement;
         [Header("Settings")]
         [SerializeField] private Material outlineMaterial;
-        [SerializeField, InlineToggle(nameof(customizeThickness)), Range(0f, 0.5f)] private float thickness = 0.05f;
+        [SerializeField, InlineToggle(nameof(customizeThickness), 0f, 0.5f)] private float thickness = 0.05f;
         [SerializeField, InlineToggle(nameof(customizeColor))] private Color color = Color.white;
         [SerializeField, InlineToggle(nameof(overrideLayer))] private int outlineLayer;
         [SerializeField, InlineToggle(nameof(overrideStencil)), Tooltip("Does not change in runtime.")] private int outlineStencilRef = 4;

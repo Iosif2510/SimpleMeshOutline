@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this package will be documented in this file.
 
+## [0.2.1] - 2026-02-10
+- Fixed inspector UI on OutlineRenderer, CompositeOutlineRenderer.
+
 ## [0.2.0] - 2026-02-08
 
 ### Added

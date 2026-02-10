@@ -28,7 +28,15 @@ namespace _2510.SimpleMeshOutline.Editor
                 toggleField.style.marginRight = 5;
 
                 // 2. 실제 데이터 필드 생성
-                var dataField = new PropertyField(property, property.displayName);
+                VisualElement dataField;
+                if (attr.UseRange && property.propertyType == SerializedPropertyType.Float)
+                {
+                    dataField = new Slider(property.displayName, attr.Min, attr.Max) { bindingPath = property.propertyPath };
+                }
+                else
+                {
+                    dataField = new PropertyField(property, property.displayName);
+                }
                 dataField.style.flexGrow = 1;
 
                 // 3. 활성화 상태 동기화 (초기값 및 변경 시)
