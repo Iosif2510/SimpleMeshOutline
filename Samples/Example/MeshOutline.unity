@@ -1046,7 +1046,7 @@ MonoBehaviour:
   outlineLayer: 8
   outlineStencilRef: 4
   overrideLayer: 1
-  customizeThickness: 0
+  customizeThickness: 1
   customizeColor: 1
   overrideStencil: 0
 --- !u!1660057539 &9223372036854775807
