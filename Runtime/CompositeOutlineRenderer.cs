@@ -15,6 +15,7 @@ namespace _2510.SimpleMeshOutline
     {
         private static readonly int ThicknessProperty = Shader.PropertyToID("_Thickness");
         private static readonly int ColorProperty = Shader.PropertyToID("_BaseColor");
+        private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
 
         [SerializeField] private bool isEnabled = false;
         [Header("Sources")]
@@ -30,12 +31,26 @@ namespace _2510.SimpleMeshOutline
         [SerializeField, HideInInspector] private bool customizeColor = false;
         [SerializeField, HideInInspector] private bool overrideStencil = false;
         
+        private Material _outlineMaterialInstance;
+        
         public float Thickness => customizeThickness ? thickness : outlineMaterial.GetFloat(ThicknessProperty);
 
         public Color OutlineColor => customizeColor ? color : outlineMaterial.GetColor(ColorProperty);
         public int OutlineLayer => overrideLayer ? outlineLayer : gameObject.layer;
-        public int OutlineStencilRef => overrideStencil ? outlineStencilRef : 4;
+        public int OutlineStencilRef => overrideStencil ? outlineStencilRef : outlineMaterial.GetInt(StencilRef);
         
+        private void Awake()
+        {
+            if (overrideStencil)
+            {
+                _outlineMaterialInstance = new Material(outlineMaterial);
+                _outlineMaterialInstance.SetInt(StencilRef, outlineStencilRef);
+            }
+            else 
+            {
+                _outlineMaterialInstance = outlineMaterial;
+            }
+        }
         
         public void SetOutlineColor(Color color)
         {
@@ -74,10 +89,11 @@ namespace _2510.SimpleMeshOutline
         {
             if (outlineElements.Count == 0) return;
 
+            if (overrideStencil) _outlineMaterialInstance.SetInt(StencilRef, outlineStencilRef);
             var param = new OutlineParam(OutlineColor, Thickness, OutlineLayer, OutlineStencilRef);
             foreach (var element in outlineElements)
             {
-                element.Render(outlineMaterial, param);
+                element.Render(_outlineMaterialInstance, param);
             }
         }
 
@@ -98,6 +114,7 @@ namespace _2510.SimpleMeshOutline
             var meshFilters = GetComponentsInChildren<MeshFilter>(true);
             if (outlineElements == null) outlineElements = new List<OutlineElement>(meshFilters.Length);
             outlineElements.Clear();
+            
             foreach (var meshFilter in meshFilters)
             {
                 if (!meshFilter.TryGetComponent<OutlineElement>(out var element))

@@ -47,6 +47,7 @@ namespace _2510.SimpleMeshOutline
             {
                 _outlineMaterialInstance = outlineMaterial;
             }
+            if (outlineElement == null) outlineElement = GetComponent<OutlineElement>();
         }
         
         public void SetOutlineColor(Color color)
@@ -89,7 +90,6 @@ namespace _2510.SimpleMeshOutline
 
         private void Render()
         {
-            if (outlineElement == null) outlineElement = GetComponent<OutlineElement>();
             if (overrideStencil) _outlineMaterialInstance.SetInt(StencilRef, outlineStencilRef);
             var param = new OutlineParam(OutlineColor, Thickness, OutlineLayer, OutlineStencilRef);
             outlineElement.Render(_outlineMaterialInstance, param);

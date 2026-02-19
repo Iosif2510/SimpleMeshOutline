@@ -83,9 +83,10 @@ namespace _2510.SimpleMeshOutline
             var localToWorld = transform.localToWorldMatrix;
             
             renderParams.layer = gameObject.layer;
+            var subMeshCount = outlineMesh.subMeshCount;
 
             renderParams.material = GetMaskMaterial(stencilRef);
-            Graphics.RenderMesh(renderParams, outlineMesh, 0, localToWorld, previousLocalToWorld);
+            for (var i = 0; i < subMeshCount; i++) Graphics.RenderMesh(renderParams, outlineMesh, i, localToWorld, previousLocalToWorld);
             
             renderParams.matProps = propertyBlock;
             propertyBlock.SetColor(ColorProperty, color);
@@ -94,7 +95,7 @@ namespace _2510.SimpleMeshOutline
             renderParams.layer = outlineLayer;
 
             renderParams.material = sharedMaterial;
-            Graphics.RenderMesh(renderParams, outlineMesh, 0, localToWorld, previousLocalToWorld);
+            for (var i = 0; i < subMeshCount; i++) Graphics.RenderMesh(renderParams, outlineMesh, i, localToWorld, previousLocalToWorld);
             previousLocalToWorld = localToWorld;
         }
         

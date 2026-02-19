@@ -110,10 +110,8 @@ namespace _2510.SimpleMeshOutline.Editor
         {
             if (sourceMesh == null) return null;
 
-            // --- 베이킹 로직 (이전과 동일) ---
-            Mesh outlineMesh = Instantiate(sourceMesh);
-            Vector3[] vertices = outlineMesh.vertices;
-            Vector3[] normals = outlineMesh.normals;
+            Vector3[] vertices = sourceMesh.vertices;
+            Vector3[] normals = sourceMesh.normals;
             Vector3[] smoothNormals = new Vector3[normals.Length];
 
             var normalDict = new Dictionary<Vector3, Vector3>();
@@ -129,10 +127,31 @@ namespace _2510.SimpleMeshOutline.Editor
             {
                 smoothNormals[i] = normalDict[vertices[i]].normalized;
             }
+            
+            var subMeshCount = sourceMesh.subMeshCount;
+            var combinedIndices = new List<int>();
+        
+            for (int i = 0; i < subMeshCount; i++)
+            {
+                // 각 서브메시의 인덱스를 가져와서 하나의 리스트에 추가
+                // GetIndices는 해당 서브메시의 토폴로지(삼각형 등)를 유지하며 인덱스를 가져옵니다.
+                combinedIndices.AddRange(sourceMesh.GetIndices(i));
+            }
+            
+            var outlineMesh = new Mesh
+            {
+                name = sourceMesh.name + "_Outline"
+            };
 
+            outlineMesh.Clear(); 
+
+            outlineMesh.vertices = vertices;
             outlineMesh.normals = smoothNormals;
-
-            // 에셋 저장창 열기
+            outlineMesh.uv = sourceMesh.uv; 
+            
+            outlineMesh.subMeshCount = 1;
+            outlineMesh.SetIndices(combinedIndices.ToArray(), MeshTopology.Triangles, 0);
+            
             return outlineMesh;
         }
     }
