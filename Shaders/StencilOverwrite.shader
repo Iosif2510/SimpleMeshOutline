@@ -13,7 +13,7 @@ Shader "_2510/SimpleMeshOutline/StencilOverwrite"
         Pass
         {
             ColorMask 0
-            ZWrite Off
+            ZWrite On
             
             Stencil
             {
@@ -21,7 +21,7 @@ Shader "_2510/SimpleMeshOutline/StencilOverwrite"
                 Comp Always   // The stencil test always passes
                 Pass Replace  // If both stencil and depth tests pass, replace the buffer value with the reference value
                 Fail Keep     // If the stencil test fails, keep the current value
-//                ZFail Keep    // If the depth test fails, keep the current value
+                ZFail Keep    // If the depth test fails, keep the current value
 //                WriteMask 255 // Ensures all 8 bits of the stencil buffer can be written to
             }
             

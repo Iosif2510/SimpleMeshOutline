@@ -4,7 +4,8 @@ All notable changes to this package will be documented in this file.
 ## [0.2.2] - 2026-02-19
 - Fixed stencil comparison issue on CompositeOutlineRenderer.
 - OutlineElement now draws outline for all submeshes.
-- OutlineMeshBaker now merges every submeshes into one. 
+- OutlineMeshBaker now merges every submeshes into one.
+- StencilOverwrite shader now writes on and checks ZBuffer.
 
 ## [0.2.1] - 2026-02-10
 - Fixed inspector UI on OutlineRenderer, CompositeOutlineRenderer.
