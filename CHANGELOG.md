@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this package will be documented in this file.
 
+## [0.2.3] - 2026-06-24
+- Added runtime static field initialization for OutlineElement in case of not loading domain on replay.
+
 ## [0.2.2] - 2026-02-19
 - Fixed stencil comparison issue on CompositeOutlineRenderer.
 - OutlineElement now draws outline for all submeshes.
