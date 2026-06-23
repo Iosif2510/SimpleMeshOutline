@@ -17,7 +17,7 @@ namespace _2510.SimpleMeshOutline
         private static readonly int ColorProperty = Shader.PropertyToID("_BaseColor");
         private static readonly int StencilRef = Shader.PropertyToID("_StencilRef");
         
-        private static string _stencilOverwriteShader = "_2510/SimpleMeshOutline/StencilOverwrite";
+        private static readonly string _stencilOverwriteShader = "_2510/SimpleMeshOutline/StencilOverwrite";
         private static Dictionary<int, Material> _outlineMaskPool = new ();
 
         [SerializeField] private Mesh outlineMesh;
@@ -25,6 +25,12 @@ namespace _2510.SimpleMeshOutline
         private RenderParams renderParams;
         private MaterialPropertyBlock propertyBlock;
         private MeshRenderer meshRenderer;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void InitializePool()
+        {
+            _outlineMaskPool = new Dictionary<int, Material>();
+        }
         
         private void Awake()
         {
